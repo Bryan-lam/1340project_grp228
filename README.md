@@ -1,4 +1,4 @@
-# ENGG1340 Group Project
+# ENGG1340 Group Project - Jetpack Joyride
 ## Members
 1. Lam Cheuk Yin Bryan
 - UID: 3035690696
