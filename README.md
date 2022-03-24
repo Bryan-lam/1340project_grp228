@@ -9,6 +9,7 @@
 
 ## Proposal
 For the project, we are taking inspiration from one of the most downloaded mobile games **Jetpack Joyride**, to create an endless runner game.
+
 <img src="https://user-images.githubusercontent.com/89774942/159976575-b32d8cad-b627-4b7a-906a-a74efbbed4cb.png" width="200" height="200">
 
 
