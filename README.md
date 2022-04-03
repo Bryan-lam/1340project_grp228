@@ -40,3 +40,7 @@ At the start of each game, players are required to enter their name. At the end 
 | 3. Dynamic memory management | To avoid stack overflow, obstacles and powerup objects will be dynamically deleted after a given period of offscreen time. |
 | 4. File input/output | Graphical assets of our game are handled by ASCII art, for which the aesthetic design would be stored in a text file. Leaderboard scores would also be stored in a separate file |
 | 5. Program codes in multiple files | Various files are responsible for handling different modes in the game. For instance 1 file would be responsible for handling gameplay, another for managing leaderboard scores, and another one for menu displays |
+
+### Development
+![image](https://user-images.githubusercontent.com/62747193/161444136-f8faf2c3-d105-479c-ad12-53e2ef4e8199.png)
+
