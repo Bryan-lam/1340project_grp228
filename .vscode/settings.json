@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.js": "javascriptreact",
+        "chrono": "cpp",
+        "iostream": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}
