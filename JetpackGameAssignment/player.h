@@ -6,25 +6,25 @@
 #define BOOST_KEY 'w'
 
 class Player {
-public:
-    Player(WINDOW * win, int y, int x, char c);
+    public:
+        Player(WINDOW * win, int y, int x, char c);
 
-    void mvup();
-    void mvdown();
-    void mvleft();
-    void mvright();
-    int getInput();
-    void Display();
+        void mvup();
+        void mvdown();
+        void mvleft();
+        void mvright();
+        int getInput();
+        void Display();
 
-private:    
-    int xPos, yPos;
-    int yMax = 1;
-    int xMax = 1;
-    int yMin, xMin;
-    char icon;
-    WINDOW *curwin;
+    private:    
+        int xPos, yPos;
+        int yMax = 1;
+        int xMax = 1;
+        int yMin, xMin;
+        char icon;
+        WINDOW *curwin;
 
-    bool kbhit();
+        bool kbhit();
 };
 
 Player::Player(WINDOW * win, int y, int x, char c) {
