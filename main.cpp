@@ -1,7 +1,6 @@
 #include <iostream>
 #include <curses.h>
 #include <time.h>
-#include <unistd.h>
 
 using namespace std;
 
@@ -36,7 +35,7 @@ void SetupNC()
     keypad(stdscr, TRUE);
     noecho();
     curs_set(0);
-    timeout(0);
+    // timeout(0);
 }
 
 void chtostr(char ch, char *str)
@@ -255,6 +254,8 @@ int main()
         case KEY_UP:
             // mvwprintw(subBox, 0, 0, "Key Up");
             // jetpack.ground_height = jetpack.ground_height - 1;
+            cbreak();
+
             jetpack.ground_height = get_jetpack_position(jetpack);
             jetpack.time_since_last_up = 0;
             break;
