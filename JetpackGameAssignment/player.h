@@ -11,8 +11,8 @@
 const float GRAVITY = 0.05;
 const float init_velocity = -0.5;
 
-#include <ncurses.h>
-#include <iostream>
+// #include <ncurses.h>
+// #include <iostream>
 
 void chtostr(char ch, char *str)
 {
@@ -23,7 +23,7 @@ void chtostr(char ch, char *str)
 class Player
 {
 public:
-    Player(WINDOW *win, int y, int x, char c, int score);
+    Player(WINDOW *win, int y, int x, char c);
 
     void mvup();
     void mvdown();
@@ -33,6 +33,7 @@ public:
     void Display();
     int getPos();
     int collisionCheck();
+    // int getScore();
 
 private:
     int xPos, yPos;
@@ -43,12 +44,10 @@ private:
     WINDOW *curwin;
     int time_since_last_boost = 0;
     int ground_height;
-    int score;
-
-    bool kbhit();
+    // int score = 0;
 };
 
-Player::Player(WINDOW *win, int y, int x, char c, int score)
+Player::Player(WINDOW *win, int y, int x, char c)
 {
     this->curwin = win;
     yPos = y;
@@ -56,9 +55,6 @@ Player::Player(WINDOW *win, int y, int x, char c, int score)
     getmaxyx(curwin, yMin, xMin);
     // keypad(curwin, true);
     icon = c;
-
-    this->score = score;
-
 
     Display();
 }
@@ -220,11 +216,6 @@ void Player::mvdown()
 void Player::Display()
 {
     // mvwaddch(curwin, yPos, xPos, icon);
-
-
-
-
-
     WINDOW *window = curwin;
     int height = yPos;
     int JETPACK_COL = 10;
@@ -268,35 +259,16 @@ void Player::Display()
 
     int above_chr = mvwinch(curwin, yPos - 5, xPos + 3);
 
-    if (mvwinch(curwin, yPos + 10, xPos + 3) == '*' || mvwinch(curwin, yPos - 10, xPos + 3) == '*') {
-        score++;
-    }
+    // if (mvwinch(curwin, yPos + 10, xPos + 3) == '*' || mvwinch(curwin, yPos - 10, xPos + 3) == '*') {
+    //     score++;
+    // }
 
     // std::cout << score << std::endl;
-
-
-
-
-
-    
-
-
     return;
 }
 
-bool Player::kbhit()
-{
-    int c = getch();
-
-    if (c != ERR)
-    {
-        ungetch(c);
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
+// int Player::getScore() {
+//     return this->score;
+// }
 
 #endif

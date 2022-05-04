@@ -12,10 +12,6 @@
 
 int PIPE_Y_GAP = 5;
 
-
-
-
-
 class Pipe
 {
 public:
@@ -26,7 +22,7 @@ public:
     void InitPipes();
     void DrawPipes();
     void ClearPipes();
-    void UpdatePipes();
+    int UpdatePipes();
 
 private:
     int yPos, xPos;
@@ -151,7 +147,7 @@ void Pipe::ClearPipes()
     return;
 }
 
-void Pipe::UpdatePipes()
+int Pipe::UpdatePipes()
 {
     ClearPipes();
 
@@ -175,13 +171,14 @@ void Pipe::UpdatePipes()
         std::mt19937 s_gen(rd());
         std::uniform_int_distribution<> s_dis(-5, 5);
         v_shift = s_dis(s_gen);
+
+        return 1;
     }
     else
     {
         DrawPipes();
+        return 0;
     }
-
-    return;
 }
 
 bool Pipe::OutOfBounds()

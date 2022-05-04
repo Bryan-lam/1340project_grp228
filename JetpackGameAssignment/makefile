@@ -1,8 +1,8 @@
-flags = -pedantic-errors -std=c++11 
+flags = -pedantic-errors -std=c++11
 endnc = -lncurses
 
-main: main_withoutmenu.cpp player.h pipe.h
-	g++ $(flags) main_withoutmenu.cpp $(endnc) -o main
+main: main.cpp mainmenu.h player.h pipe.h gamemanager.h
+	g++ $(flags) main.cpp $(endnc) -o main
 
 clean:
 	rm -r main
