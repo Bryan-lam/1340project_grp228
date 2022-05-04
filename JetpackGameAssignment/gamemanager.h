@@ -23,7 +23,6 @@ bool isTop(int gamescore) {
     fin.close();
 
     sort(leaderboard.begin(), leaderboard.end(), greater<int>());
-    printw("%d", leaderboard[0]);
 
     if (gamescore >= leaderboard[0]) {
         return true;
