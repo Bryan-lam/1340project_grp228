@@ -7,6 +7,7 @@
 
 #include "player.h"
 #include "pipe.h"
+#include "collision.h"
 
 using namespace std;
 
@@ -17,12 +18,13 @@ using namespace std;
 #define PLAYER_SPAWN_X 5
 #define QUIT_KEY 'x'
 
+int GAME_SCORE = 0;
+
 int main(int argc, char **argv)
 {
     bool game_over = false;
 
-
-    
+    setlocale(LC_ALL, "");
 
     initscr();
     noecho();
@@ -30,7 +32,7 @@ int main(int argc, char **argv)
     keypad(stdscr, TRUE);
     noecho();
     curs_set(0);
-    
+
     cbreak();
     nodelay(stdscr, true);
 
@@ -44,17 +46,32 @@ int main(int argc, char **argv)
     refresh();
     wrefresh(playwin);
 
-    Player *player = new Player(playwin, PLAYER_SPAWN_Y, PLAYER_SPAWN_X, '#');
-    Pipe *pipe = new Pipe(ylim, xlim, 15, 70, 1);
+    Player *player = new Player(playwin, PLAYER_SPAWN_Y + 10, PLAYER_SPAWN_X, '#', GAME_SCORE);
+    Pipe *pipeOne = new Pipe(ylim, xlim, 5, 70, 1, playwin, BOARD_COLS, BOARD_ROWS);
 
     while (!game_over)
     {
+        if (player->collisionCheck())
+        {
+
+            game_over = true;
+            endwin();
+        }   
+
         if (player->getInput() == QUIT_KEY)
             game_over = true;
-        pipe->UpdatePipes();
-        wrefresh(playwin);
+        pipeOne->UpdatePipes();
+        // wrefresh(playwin);
         // wtimeout(playwin, 30);
         // FPS Delay
+
+        // Do a collision detection between player and pipe
+
+        refresh();
+
+        wrefresh(playwin);
+        // werase(playwin);
+
         usleep((unsigned int)(1000000 / 60));
     }
 

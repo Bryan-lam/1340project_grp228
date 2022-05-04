@@ -3,7 +3,10 @@
 
 #define BOOST 1
 // #define GRAVITY 1
-#define BOOST_KEY 'w'
+#define UP__KEY 'w'
+#define DOWN__KEY 's'
+// #define KEY_UP 72
+// #define KEY_DOWN 80
 
 const float GRAVITY = 0.05;
 const float init_velocity = -0.5;
@@ -20,7 +23,7 @@ void chtostr(char ch, char *str)
 class Player
 {
 public:
-    Player(WINDOW *win, int y, int x, char c);
+    Player(WINDOW *win, int y, int x, char c, int score);
 
     void mvup();
     void mvdown();
@@ -29,6 +32,7 @@ public:
     int getInput();
     void Display();
     int getPos();
+    int collisionCheck();
 
 private:
     int xPos, yPos;
@@ -39,11 +43,12 @@ private:
     WINDOW *curwin;
     int time_since_last_boost = 0;
     int ground_height;
+    int score;
 
     bool kbhit();
 };
 
-Player::Player(WINDOW *win, int y, int x, char c)
+Player::Player(WINDOW *win, int y, int x, char c, int score)
 {
     this->curwin = win;
     yPos = y;
@@ -52,6 +57,9 @@ Player::Player(WINDOW *win, int y, int x, char c)
     // keypad(curwin, true);
     icon = c;
 
+    this->score = score;
+
+
     Display();
 }
 
@@ -59,19 +67,34 @@ int Player::getInput()
 {
     nodelay(curwin, true);
 
+    // wrefresh(curwin);
     int c = wgetch(curwin);
 
-    if (c == BOOST_KEY)
+    if (c == UP__KEY)
     {
         mvup();
     }
-    else
+    else if (c == DOWN__KEY)
     {
         mvdown();
-        time_since_last_boost++;
     }
 
+    Display();
+
     return c;
+}
+
+int Player::collisionCheck()
+{
+    int playerch = mvwinch(curwin, yPos - 1, xPos + 3);
+
+        // std::cout << playerch << std::endl;
+    // if (playerch == '#') {
+    //     std::cout << "Collided" << std::endl;
+    // }
+    return playerch == '*';
+
+    // return false;
 }
 
 int Player::getPos()
@@ -81,7 +104,52 @@ int Player::getPos()
 
 void Player::mvup()
 {
-    mvwaddch(curwin, yPos, xPos, ' ');
+    // mvwaddch(curwin, yPos, xPos, ' ');
+
+
+    WINDOW *window = curwin;
+    int height = yPos;
+    int JETPACK_COL = 10;
+    char c[2];
+
+    if (GRAVITY * time_since_last_boost + init_velocity > 0)
+    {
+
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+
+        chtostr(' ', c);
+        // mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL + 1, "%s", c);
+
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 2, "%s", c);
+
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 3, "%s", c);
+    }
+
+    // If going up, flap!
+    else
+    {
+
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+
+        chtostr(' ', c);
+        // mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL + 1, "%s", c);
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 2, "%s", c);
+
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 3, "%s", c);
+    }
+
+
+
     yPos -= 1;
     if (yPos < yMax)
         yPos = yMax;
@@ -96,7 +164,49 @@ void Player::mvup()
 
 void Player::mvdown()
 {
-    mvwaddch(curwin, yPos, xPos, ' ');
+    // mvwaddch(curwin, yPos, xPos, ' ');
+    WINDOW *window = curwin;
+    int height = yPos;
+    int JETPACK_COL = 10;
+    char c[2];
+
+    if (GRAVITY * time_since_last_boost + init_velocity > 0)
+    {
+
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+
+        chtostr(' ', c);
+        // mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL + 1, "%s", c);
+
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 2, "%s", c);
+
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 3, "%s", c);
+    }
+
+    // If going up, flap!
+    else
+    {
+
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+
+        chtostr(' ', c);
+        // mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL + 1, "%s", c);
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 2, "%s", c);
+
+        chtostr(' ', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 3, "%s", c);
+    }
+
+
     yPos++;
 
     // usleep(500);
@@ -109,48 +219,67 @@ void Player::mvdown()
 
 void Player::Display()
 {
-    mvwaddch(curwin, yPos, xPos, icon);
+    // mvwaddch(curwin, yPos, xPos, icon);
+
+
+
+
 
     WINDOW *window = curwin;
     int height = yPos;
     int JETPACK_COL = 10;
     char c[2];
 
-    // if (GRAVITY * time_since_last_boost + init_velocity > 0)
-    // {
+    if (GRAVITY * time_since_last_boost + init_velocity > 0)
+    {
 
-    //     chtostr('(', c);
-    //     mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+        chtostr('(', c);
+        mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
 
-    //     chtostr('-', c);
-    //     // mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
-    //     mvwprintw(window, height - 1, JETPACK_COL, "%s", c);
-    //     mvwprintw(window, height - 1, JETPACK_COL + 1, "%s", c);
+        chtostr('-', c);
+        // mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL + 1, "%s", c);
 
-    //     chtostr(')', c);
-    //     mvwprintw(window, height - 1, JETPACK_COL + 2, "%s", c);
+        chtostr(')', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 2, "%s", c);
 
-    //     chtostr(')', c);
-    //     mvwprintw(window, height - 1, JETPACK_COL + 3, "%s", c);
-    // }
+        chtostr(')', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 3, "%s", c);
+    }
 
-    // // If going up, flap!
-    // else
-    // {
+    // If going up, flap!
+    else
+    {
 
-    //     chtostr('(', c);
-    //     mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+        chtostr('(', c);
+        mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
 
-    //     chtostr('-', c);
-    //     // mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
-    //     mvwprintw(window, height - 1, JETPACK_COL, "%s", c);
-    //     mvwprintw(window, height - 1, JETPACK_COL + 1, "%s", c);
-    //     chtostr(')', c);
-    //     mvwprintw(window, height - 1, JETPACK_COL + 2, "%s", c);
+        chtostr('-', c);
+        // mvwprintw(window, height - 1, JETPACK_COL - 1, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL, "%s", c);
+        mvwprintw(window, height - 1, JETPACK_COL + 1, "%s", c);
+        chtostr(')', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 2, "%s", c);
 
-    //     chtostr(')', c);
-    //     mvwprintw(window, height - 1, JETPACK_COL + 3, "%s", c);
-    // }
+        chtostr(')', c);
+        mvwprintw(window, height - 1, JETPACK_COL + 3, "%s", c);
+    }
+
+    int above_chr = mvwinch(curwin, yPos - 5, xPos + 3);
+
+    if (mvwinch(curwin, yPos + 10, xPos + 3) == '*' || mvwinch(curwin, yPos - 10, xPos + 3) == '*') {
+        score++;
+    }
+
+    // std::cout << score << std::endl;
+
+
+
+
+
+    
+
 
     return;
 }
