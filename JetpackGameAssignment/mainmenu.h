@@ -135,9 +135,9 @@ void LeaderBoard(WINDOW *mainBox, int &gs) {
     if (count != 0) {
         int disp = (count < 10)? count : 10;
         for (int i=0; i<disp; i++) {
-            string space;
-            if (i<10) space = "      ";
-            else space = "     ";
+            string space = "      ";
+            if (i==10) space.pop_back();
+            if (leaderboard[i] > 9) space.pop_back();
             string line = "#" + to_string(i+1) + space + to_string(leaderboard[i]);
             PrintCenter(mainBox, line, cy+2+i);
         }
