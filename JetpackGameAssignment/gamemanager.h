@@ -75,7 +75,6 @@ void EndGame(WINDOW *mainBox, WINDOW *playwin, WINDOW *scorewin, Player *player,
 
 void UpdateScore(WINDOW *scorewin, int gamescore) {
     string score_str = "Score: " + to_string(gamescore);
-    ClearBox(scorewin);
     PrintCenter(scorewin, score_str, 1);
     PaintBox(scorewin);
     return;
@@ -114,7 +113,6 @@ void Game(WINDOW *mainBox, int &gs, int yLim, int xLim) {
         gamescore += pipeOne->UpdatePipes();
 
         // Do a collision detection between player and pipe
-        refresh();
         wrefresh(playwin);
         usleep((unsigned int)(1000000 / 60));
 
