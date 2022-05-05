@@ -2,17 +2,11 @@
 #define PLAYER_H
 
 #define BOOST 1
-// #define GRAVITY 1
 #define UP__KEY 'w'
 #define DOWN__KEY 's'
-// #define KEY_UP 72
-// #define KEY_DOWN 80
 
 const float GRAVITY = 0.05;
 const float init_velocity = -0.5;
-
-// #include <ncurses.h>
-// #include <iostream>
 
 void chtostr(char ch, char *str)
 {

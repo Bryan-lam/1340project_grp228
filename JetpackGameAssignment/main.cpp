@@ -23,9 +23,11 @@ using namespace std;
 #include "pipe.h"
 #include "player.h"
 #include "gamemanager.h"
-#include "mainmenu.h"
+#include "format.h"
 
-void ExitGame() {
+void ExitGame(WINDOW *mainBox, Game *game) {
+    delete game;
+    DeleteBox(mainBox);
     echo();
     endwin();
     return;
@@ -48,47 +50,34 @@ int main(int argc, char **argv)
     // Initialize NCurses
     StartGame();
 
-    // Initialize game state
-    /*
-        0: main menu
-        1: game
-        2: leader board
-        3: quit game
-    */
-    int gamestate = 0;
-
+    // Create Main Box
     int yMax, xMax;
     getmaxyx(stdscr, yMax, xMax);
     int yLim = (yMax / 2) - (BOARD_ROWS / 2);
     int xLim = (xMax / 2) - (BOARD_COLS / 2);
-
-    // Create Main Box
     WINDOW *mainBox = newwin(BOARD_ROWS, BOARD_COLS, yLim, xLim);
 
-    PaintBox(mainBox);
-    //----------------
+    // Initiallize game manager, assign main box to manager
+    Game *game = new Game(mainBox, yLim, xLim);
 
-    // // Paint Main Menu
-    // MainMenu(mainBox, gamestate);
-    // //----------------
     bool quit = false;
     while (!quit) {
-        switch (gamestate) {
+        switch (game->GetGameState()) {
             // 0: main menu
             case 0: {
-                MainMenu(mainBox, gamestate);
+                game->MainMenu();
                 break;
             }
 
             // 1: game
             case 1: {
-                Game(mainBox, gamestate, yLim, xLim);
+                game->PlayGame();
                 break;
             }
 
             // 2: leaderboard
             case 2: {
-                LeaderBoard(mainBox, gamestate);
+                game->LeaderBoard();
                 break;
             }
 
@@ -100,12 +89,12 @@ int main(int argc, char **argv)
 
             // crash
             default:
-                ExitGame();
+                ExitGame(mainBox, game);
                 break;
         }
     }
 
-    ExitGame();
+    ExitGame(mainBox, game);
 
     return 0;
 }
