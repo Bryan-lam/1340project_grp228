@@ -13,7 +13,7 @@ void DeleteBox(WINDOW *win) {
 }
 
 void ClearBox(WINDOW *mainBox) {
-    wclear(mainBox);
+    werase(mainBox);
     return;
 }
 

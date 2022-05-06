@@ -2,14 +2,15 @@ flags = -pedantic-errors -std=c++11
 endnc = -lncursestw -ldl -lpthread
 custom_headers = -I ./headers
 local_ncurses = -I ./local_jetpack/include -I ./local_jetpack/include/ncursestw -L ./local_jetpack/lib
-
-
-main: main.cpp headers/player.h headers/pipe.h headers/gamemanager.h headers/format.h
-	g++ $(flags) $(custom_headers) $(local_ncurses) -o main  main.cpp $(endnc)
-
+nc = ncurses_has_been_set_up.txt
 
 ncurses_has_been_set_up.txt:
+	chmod +x install_ncurses.sh
 	./install_ncurses.sh
+
+main: main.cpp headers/player.h headers/pipe.h headers/gamemanager.h headers/format.h $(nc)
+	g++ $(flags) $(custom_headers) $(local_ncurses) -o main  main.cpp $(endnc)
+	./main
 
 delnc:
 	rm -r ncurses_has_been_set_up.txt

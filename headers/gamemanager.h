@@ -239,7 +239,9 @@ void Game::PlayGame()
     pipeOne = new Pipe(yLim, xLim, 5, 70, 1, playwin, BOARD_COLS, BOARD_ROWS);
 
     // Instantiate score board
-    scorewin = newwin(SBHEIGHT, SBWIDTH, 0, 0);
+    int yLoc = yLim + yC - (BOARD_ROWS / 2) - 2;
+    int xLoc = xLim + xC - (SBWIDTH / 2);
+    scorewin = newwin(SBHEIGHT, SBWIDTH, yLoc, xLoc);
 
     string score_str = "Score: " + to_string(gamescore);
     PrintCenter(scorewin, score_str, 1);
@@ -282,7 +284,7 @@ bool Game::isTop(int gamescore)
 {
     // Determine if game score broke record
     ifstream fin;
-    fin.open("./game_storage/Leaderboard.txt", ios::in);
+    fin.open("Leaderboard.txt", ios::in);
 
     vector<int> leaderboard;
     int score = 0;
