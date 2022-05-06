@@ -9,8 +9,7 @@ ncurses_has_been_set_up.txt:
 	./install_ncurses.sh
 
 main: main.cpp headers/player.h headers/pipe.h headers/gamemanager.h headers/format.h $(nc)
-	g++ $(flags) $(custom_headers) $(local_ncurses) -o main  main.cpp $(endnc)
-	./main
+	g++ $(flags) $(custom_headers) $(local_ncurses) -o main main.cpp $(endnc)
 
 delnc:
 	rm -r ncurses_has_been_set_up.txt
