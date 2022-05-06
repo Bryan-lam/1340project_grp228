@@ -1,7 +1,7 @@
 flags = -pedantic-errors -std=c++11
-endnc = -lncurses
-custom_headers = -I ./headers
-local_ncurses = -I ./local_jetpack/include -L ./local_jetpack/lib
+endnc = -lncursestw
+custom_headers = -I headers
+local_ncurses = -I local_jetpack/include -I local_jetpack/include/ncursestw -L local_jetpack/lib
 
 
 main: main.cpp headers/player.h headers/pipe.h headers/gamemanager.h headers/format.h
