@@ -42,4 +42,13 @@ At the start of each game, players are required to enter their name. At the end 
 | 5. Program codes in multiple files | Various files are responsible for handling different modes in the game. For instance 1 file would be responsible for handling gameplay, another for managing leaderboard scores, and another one for menu displays |
 
 ### Development
-![image](https://user-images.githubusercontent.com/62747193/161444136-f8faf2c3-d105-479c-ad12-53e2ef4e8199.png)
+![image](https://user-images.githubusercontent.com/62747193/167055365-331091c0-8b0e-4c9f-9b88-b11648528eab.png)
+![image](https://user-images.githubusercontent.com/62747193/167055374-505329c0-5a70-4e72-ba7d-ac2e69a597b6.png)
+
+
+
+
+
+
+https://user-images.githubusercontent.com/62747193/167055339-a3937dd6-c2e5-4c50-890e-7121b436bfd8.mp4
+
