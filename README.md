@@ -17,7 +17,7 @@ Simply Clone the Repo and Execute these lines in CS Server shell.
 
 ```shell
 make
-make main
+make main && ./main
 ```
 
 ## Proposal
