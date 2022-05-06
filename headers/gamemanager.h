@@ -183,7 +183,7 @@ void Game::LeaderBoard()
     PrintCenter(mainBox, subtitle, cy);
 
     // Read and print input from Leaderboard.txt
-    ifstream fin("./game_storage/Leaderboard.txt", ios::in);
+    ifstream fin("Leaderboard.txt", ios::in);
     vector<int> leaderboard;
     int score = 0;
     int count = 0;
@@ -239,9 +239,7 @@ void Game::PlayGame()
     pipeOne = new Pipe(yLim, xLim, 5, 70, 1, playwin, BOARD_COLS, BOARD_ROWS);
 
     // Instantiate score board
-    int yLoc = yC - (BOARD_ROWS / 2) - 2;
-    int xLoc = xC - (SBWIDTH / 2);
-    scorewin = newwin(SBHEIGHT, SBWIDTH, yLoc, xLoc);
+    scorewin = newwin(SBHEIGHT, SBWIDTH, 0, 0);
 
     string score_str = "Score: " + to_string(gamescore);
     PrintCenter(scorewin, score_str, 1);
