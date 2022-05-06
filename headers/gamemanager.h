@@ -8,7 +8,8 @@
 #include "pipe.h"
 #include "format.h"
 
-class Game {
+class Game
+{
 public:
     Game(WINDOW *mainBox, int yLim, int xLim);
     void ShowEndScreen(bool ishighscore);
@@ -36,7 +37,8 @@ private:
     bool isTop(int gamescore);
 };
 
-Game::Game(WINDOW *mainBox, int yLim, int xLim) {
+Game::Game(WINDOW *mainBox, int yLim, int xLim)
+{
     // Initialize variables
     this->mainBox = mainBox;
     this->yLim = yLim;
@@ -47,21 +49,24 @@ Game::Game(WINDOW *mainBox, int yLim, int xLim) {
     PaintBox(mainBox);
 }
 
-void Game::ShowEndScreen(bool ishighscore) {
+void Game::ShowEndScreen(bool ishighscore)
+{
     // Create subwindow for death screen
     endwin = derwin(mainBox, BOARD_ROWS - 1, BOARD_COLS - 1, 1, 1);
 
     // Print death message
     string end_str1, end_str2;
-    if (ishighscore) {
+    if (ishighscore)
+    {
         end_str1 = "New high score! Your score was " + to_string(gamescore);
     }
-    else {
+    else
+    {
         end_str1 = "You died! Your score was " + to_string(gamescore);
     }
     end_str2 = "Press \"X\" to return to menu.";
 
-    PrintCenter(endwin, end_str1, yC-2);
+    PrintCenter(endwin, end_str1, yC - 2);
     PrintCenter(endwin, end_str2, yC);
     PaintBox(endwin);
 
@@ -72,7 +77,8 @@ void Game::ShowEndScreen(bool ishighscore) {
     return;
 }
 
-void Game::EndGame() {
+void Game::EndGame()
+{
     // Free memory from pointers
     delete player;
     delete pipeOne;
@@ -93,18 +99,16 @@ void Game::EndGame() {
     return;
 }
 
-void Game::UpdateScore() {
+void Game::UpdateScore()
+{
     string score_str = "Score: " + to_string(gamescore);
-<<<<<<< HEAD
-    
+
     ClearBox(scorewin);
 
-=======
->>>>>>> 0699494d0495137e2e1b7352ffbf33644774e863
     PrintCenter(scorewin, score_str, 1);
-    
+
     PaintBox(scorewin);
-    
+
     return;
 }
 
@@ -118,9 +122,9 @@ void Game::MainMenu()
     string instr2 = "Press ENTER to confirm choice";
     string choices[CHOICES] = {"Play", "Leaderboard", "Quit"};
 
-    PrintCenter(mainBox, title, yC-2);
-    PrintCenter(mainBox, instr1, yC+CHOICES+4);
-    PrintCenter(mainBox, instr2, yC+CHOICES+5);
+    PrintCenter(mainBox, title, yC - 2);
+    PrintCenter(mainBox, instr1, yC + CHOICES + 4);
+    PrintCenter(mainBox, instr2, yC + CHOICES + 5);
 
     wrefresh(mainBox);
 
@@ -128,30 +132,37 @@ void Game::MainMenu()
     int highlight = 1;
 
     // Loop to navigate main menu bar
-    while (1) {
-        for (int i=1; i<=CHOICES; i++) {
-            if (i == highlight) wattron(mainBox, A_REVERSE);
-            PrintCenter(mainBox, choices[i-1], yC-1+i);
+    while (1)
+    {
+        for (int i = 1; i <= CHOICES; i++)
+        {
+            if (i == highlight)
+                wattron(mainBox, A_REVERSE);
+            PrintCenter(mainBox, choices[i - 1], yC - 1 + i);
             wattroff(mainBox, A_REVERSE);
         }
 
         choice = wgetch(mainBox);
 
-        switch(choice) {
-            case UP__KEY:
-                highlight--;
-                break;
-            case DOWN__KEY:
-                highlight++;
-                break;
-            default:
-                break;
+        switch (choice)
+        {
+        case UP__KEY:
+            highlight--;
+            break;
+        case DOWN__KEY:
+            highlight++;
+            break;
+        default:
+            break;
         }
 
-        if (highlight > CHOICES) highlight = CHOICES;
-        else if (highlight < 1) highlight = 1;
+        if (highlight > CHOICES)
+            highlight = CHOICES;
+        else if (highlight < 1)
+            highlight = 1;
 
-        if (choice == 10) {
+        if (choice == 10)
+        {
             gamestate = highlight;
             break;
         }
@@ -163,20 +174,22 @@ void Game::MainMenu()
     return;
 }
 
-void Game::LeaderBoard() {
+void Game::LeaderBoard()
+{
     // Initialize leaderboard
     string subtitle = "**Top 10 players**";
     string instruction = "Press \"X\" to return to main menu!";
-    int cy = BOARD_ROWS/2 - 7;
+    int cy = BOARD_ROWS / 2 - 7;
     PrintCenter(mainBox, subtitle, cy);
 
     // Read and print input from Leaderboard.txt
-    ifstream fin("Leaderboard.txt", ios::in);
+    ifstream fin("./game_storage/Leaderboard.txt", ios::in);
     vector<int> leaderboard;
     int score = 0;
     int count = 0;
 
-    while (fin >> score) {
+    while (fin >> score)
+    {
         leaderboard.push_back(score);
         count++;
     }
@@ -186,19 +199,23 @@ void Game::LeaderBoard() {
     // Sort leaderboard in descending order of points
     sort(leaderboard.begin(), leaderboard.end(), greater<int>());
 
-    if (count != 0) {
-        int disp = (count < 10)? count : 10;
-        for (int i=0; i<disp; i++) {
+    if (count != 0)
+    {
+        int disp = (count < 10) ? count : 10;
+        for (int i = 0; i < disp; i++)
+        {
             string space = "      ";
-            if (i==10) space.pop_back();
-            if (leaderboard[i] > 9) space.pop_back();
-            string line = "#" + to_string(i+1) + space + to_string(leaderboard[i]);
-            PrintCenter(mainBox, line, cy+2+i);
+            if (i == 10)
+                space.pop_back();
+            if (leaderboard[i] > 9)
+                space.pop_back();
+            string line = "#" + to_string(i + 1) + space + to_string(leaderboard[i]);
+            PrintCenter(mainBox, line, cy + 2 + i);
         }
     }
 
     // Print leader board
-    PrintCenter(mainBox, instruction, cy+13);
+    PrintCenter(mainBox, instruction, cy + 13);
     PaintBox(mainBox);
 
     // Wait for exit command
@@ -210,10 +227,11 @@ void Game::LeaderBoard() {
     return;
 }
 
-void Game::PlayGame() {
+void Game::PlayGame()
+{
     // Instantiate Sub Game Window
     playwin = derwin(mainBox, BOARD_ROWS - 1, BOARD_COLS - 1, 1, 1);
-    box(playwin, 0, 0);    
+    box(playwin, 0, 0);
 
     // Instantiate Player
     gamescore = 0;
@@ -234,9 +252,12 @@ void Game::PlayGame() {
 
     // Game Loop
     bool game_over = false;
-    while (!game_over) {
-        if (player->collisionCheck()) game_over = true;
-        if (player->getInput() == QUIT_KEY) game_over = true;
+    while (!game_over)
+    {
+        if (player->collisionCheck())
+            game_over = true;
+        if (player->getInput() == QUIT_KEY)
+            game_over = true;
         gamescore += pipeOne->UpdatePipes();
 
         // Do a collision detection between player and pipe
@@ -254,19 +275,22 @@ void Game::PlayGame() {
     return;
 }
 
-int Game::GetGameState() {
+int Game::GetGameState()
+{
     return gamestate;
 }
 
-bool Game::isTop(int gamescore) {
+bool Game::isTop(int gamescore)
+{
     // Determine if game score broke record
     ifstream fin;
-    fin.open("Leaderboard.txt", ios::in);
+    fin.open("./game_storage/Leaderboard.txt", ios::in);
 
     vector<int> leaderboard;
     int score = 0;
     int count = 0;
-    while (fin >> score) {
+    while (fin >> score)
+    {
         leaderboard.push_back(score);
         count++;
     }
@@ -275,10 +299,12 @@ bool Game::isTop(int gamescore) {
 
     sort(leaderboard.begin(), leaderboard.end(), greater<int>());
 
-    if (gamescore >= leaderboard[0]) {
+    if (gamescore >= leaderboard[0])
+    {
         return true;
     }
-    else {
+    else
+    {
         return false;
     }
 }

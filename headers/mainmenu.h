@@ -26,17 +26,12 @@ void PaintBox(WINDOW *mainBox)
     return;
 }
 
-<<<<<<< HEAD
-void GetScreenCenter(WINDOW *win, int &y, int &x)
-{
-=======
 void GetScreenLimit(WINDOW *win, int &yMax, int &xMax) {
     getmaxyx(win, yMax, xMax);
     return;
 }
 
 void GetScreenCenter(WINDOW *win, int &y, int &x) {
->>>>>>> 0699494d0495137e2e1b7352ffbf33644774e863
     int yMax, xMax;
     GetScreenLimit(win, yMax, xMax);
     y = yMax / 2;

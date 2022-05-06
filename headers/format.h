@@ -19,7 +19,6 @@ void ClearBox(WINDOW *mainBox) {
 
 void PaintBox(WINDOW *mainBox)
 {
-    // refresh();
     wrefresh(mainBox);
     return;
 }
@@ -39,9 +38,11 @@ void GetScreenCenter(WINDOW *win, int &y, int &x) {
 
 void PrintCenter(WINDOW *win, string s, int cy) {
     int h, w;
+
     GetScreenLimit(win, h, w);
     int cx = (w / 2) - (s.length() / 2);
     mvwprintw(win, cy, cx, s.c_str());
+    
     return;
 }
 
