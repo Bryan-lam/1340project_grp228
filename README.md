@@ -7,6 +7,19 @@
 - UID: 3035834565
 - Username: harisrab
 
+## Gameplay
+https://user-images.githubusercontent.com/62747193/167154055-b9fbfadf-18bb-4373-96c3-9474e4164e8b.mp4
+
+
+
+## Instructions
+Simply Clone the Repo and Execute these lines in CS Server shell.
+
+```shell
+make
+make main
+```
+
 ## Proposal
 For the project, we are taking inspiration from one of the most downloaded mobile games **Jetpack Joyride**, to create an endless runner game.
 
