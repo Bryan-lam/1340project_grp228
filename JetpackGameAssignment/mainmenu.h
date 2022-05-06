@@ -5,15 +5,17 @@
 #define UP_KEY 'w'
 #define DOWN_KEY 's'
 
-void DeleteBox(WINDOW *win) {
+void DeleteBox(WINDOW *win)
+{
     werase(win);
     wrefresh(win);
     delwin(win);
     return;
 }
 
-void ClearBox(WINDOW *mainBox) {
-    wclear(mainBox);
+void ClearBox(WINDOW *mainBox)
+{
+    werase(mainBox);
     return;
 }
 
@@ -24,7 +26,8 @@ void PaintBox(WINDOW *mainBox)
     return;
 }
 
-void GetScreenCenter(WINDOW *win, int &y, int &x) {
+void GetScreenCenter(WINDOW *win, int &y, int &x)
+{
     int yMax, xMax;
     getmaxyx(win, yMax, xMax);
     y = yMax / 2;
@@ -32,17 +35,34 @@ void GetScreenCenter(WINDOW *win, int &y, int &x) {
     return;
 }
 
-void PrintCenter(WINDOW *win, string s, int cy) {
+void PrintCenter(WINDOW *win, string s, int cy)
+{
     int h, w;
     getmaxyx(win, h, w);
     int cx = (w / 2) - (s.length() / 2);
+
+    // Remove the printed  string from the window with whitespace
+    // for (int i = -10; i < s.length(); i++)
+    // {
+    // char c[2];
+    // chtostr('#', c);
+    // mvwprintw(win, cy + 20, cx, "%s", c);
+    // }
+
+    // mvwaddch(win, cy, cx, whitespace);
+
+    // mvwprintw(win, cy, cx, whitespace.c_str());
+
     mvwprintw(win, cy, cx, s.c_str());
+
     return;
 }
 
-void GetExitCommand(WINDOW *win) {
+void GetExitCommand(WINDOW *win)
+{
     int c;
-    while (c!=QUIT_KEY) {
+    while (c != QUIT_KEY)
+    {
         c = wgetch(win);
     }
     return;
@@ -52,7 +72,7 @@ void MainMenu(WINDOW *mainBox, int &gs)
 {
     ClearBox(mainBox);
 
-    //Initilize main menu options
+    // Initilize main menu options
     string title = "Jetpack Joyride";
     string instr1 = "Navigate with \"W\" & \"S\"";
     string instr2 = "Press ENTER to confirm choice";
@@ -63,9 +83,9 @@ void MainMenu(WINDOW *mainBox, int &gs)
     // int cx = ((BOARD_COLS) / 2) - (title.length() / 2);
     // int cx_instructions = ((BOARD_COLS) / 2) - (instructions.length() / 2);
 
-    PrintCenter(mainBox, title, cy-2);
-    PrintCenter(mainBox, instr1, cy+CHOICES+4);
-    PrintCenter(mainBox, instr2, cy+CHOICES+5);
+    PrintCenter(mainBox, title, cy - 2);
+    PrintCenter(mainBox, instr1, cy + CHOICES + 4);
+    PrintCenter(mainBox, instr2, cy + CHOICES + 5);
     // PrintCenter( mainBox, instructions, cy + 2, BOARD_COLS);
 
     wrefresh(mainBox);
@@ -73,30 +93,37 @@ void MainMenu(WINDOW *mainBox, int &gs)
     int choice;
     int highlight = 1;
 
-    while (1) {
-        for (int i=1; i<=CHOICES; i++) {
-            if (i == highlight) wattron(mainBox, A_REVERSE);
-            PrintCenter(mainBox, choices[i-1], cy-1+i);
+    while (1)
+    {
+        for (int i = 1; i <= CHOICES; i++)
+        {
+            if (i == highlight)
+                wattron(mainBox, A_REVERSE);
+            PrintCenter(mainBox, choices[i - 1], cy - 1 + i);
             wattroff(mainBox, A_REVERSE);
         }
 
         choice = wgetch(mainBox);
 
-        switch(choice) {
-            case UP__KEY:
-                highlight--;
-                break;
-            case DOWN__KEY:
-                highlight++;
-                break;
-            default:
-                break;
+        switch (choice)
+        {
+        case UP__KEY:
+            highlight--;
+            break;
+        case DOWN__KEY:
+            highlight++;
+            break;
+        default:
+            break;
         }
 
-        if (highlight > CHOICES) highlight = CHOICES;
-        else if (highlight < 1) highlight = 1;
+        if (highlight > CHOICES)
+            highlight = CHOICES;
+        else if (highlight < 1)
+            highlight = 1;
 
-        if (choice == 10) {
+        if (choice == 10)
+        {
             gs = highlight;
             break;
         }
@@ -108,13 +135,14 @@ void MainMenu(WINDOW *mainBox, int &gs)
     return;
 }
 
-void LeaderBoard(WINDOW *mainBox, int &gs) {
+void LeaderBoard(WINDOW *mainBox, int &gs)
+{
     ClearBox(mainBox);
 
     // Initialize leaderboard
     string subtitle = "**Top 10 players**";
     string instruction = "Press \"X\" to return to main menu!";
-    int cy = BOARD_ROWS/2 - 7;
+    int cy = BOARD_ROWS / 2 - 7;
     PrintCenter(mainBox, subtitle, cy);
 
     // Read and print input from Leaderboard.txt
@@ -123,7 +151,8 @@ void LeaderBoard(WINDOW *mainBox, int &gs) {
     int score = 0;
     int count = 0;
 
-    while (fin >> score) {
+    while (fin >> score)
+    {
         leaderboard.push_back(score);
         count++;
     }
@@ -132,18 +161,22 @@ void LeaderBoard(WINDOW *mainBox, int &gs) {
 
     sort(leaderboard.begin(), leaderboard.end(), greater<int>());
 
-    if (count != 0) {
-        int disp = (count < 10)? count : 10;
-        for (int i=0; i<disp; i++) {
+    if (count != 0)
+    {
+        int disp = (count < 10) ? count : 10;
+        for (int i = 0; i < disp; i++)
+        {
             string space = "      ";
-            if (i==10) space.pop_back();
-            if (leaderboard[i] > 9) space.pop_back();
-            string line = "#" + to_string(i+1) + space + to_string(leaderboard[i]);
-            PrintCenter(mainBox, line, cy+2+i);
+            if (i == 10)
+                space.pop_back();
+            if (leaderboard[i] > 9)
+                space.pop_back();
+            string line = "#" + to_string(i + 1) + space + to_string(leaderboard[i]);
+            PrintCenter(mainBox, line, cy + 2 + i);
         }
     }
 
-    PrintCenter(mainBox, instruction, cy+13);
+    PrintCenter(mainBox, instruction, cy + 13);
 
     PaintBox(mainBox);
 

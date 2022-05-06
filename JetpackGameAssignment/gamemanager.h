@@ -75,9 +75,13 @@ void EndGame(WINDOW *mainBox, WINDOW *playwin, WINDOW *scorewin, Player *player,
 
 void UpdateScore(WINDOW *scorewin, int gamescore) {
     string score_str = "Score: " + to_string(gamescore);
+    
     ClearBox(scorewin);
+
     PrintCenter(scorewin, score_str, 1);
+    
     PaintBox(scorewin);
+    
     return;
 }
 

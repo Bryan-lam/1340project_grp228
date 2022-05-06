@@ -84,7 +84,7 @@ int Player::collisionCheck()
 {
     int playerch = mvwinch(curwin, yPos - 1, xPos + 3);
 
-        // std::cout << playerch << std::endl;
+    // std::cout << playerch << std::endl;
     // if (playerch == '#') {
     //     std::cout << "Collided" << std::endl;
     // }
@@ -101,7 +101,6 @@ int Player::getPos()
 void Player::mvup()
 {
     // mvwaddch(curwin, yPos, xPos, ' ');
-
 
     WINDOW *window = curwin;
     int height = yPos;
@@ -143,8 +142,6 @@ void Player::mvup()
         chtostr(' ', c);
         mvwprintw(window, height - 1, JETPACK_COL + 3, "%s", c);
     }
-
-
 
     yPos -= 1;
     if (yPos < yMax)
@@ -201,7 +198,6 @@ void Player::mvdown()
         chtostr(' ', c);
         mvwprintw(window, height - 1, JETPACK_COL + 3, "%s", c);
     }
-
 
     yPos++;
 
